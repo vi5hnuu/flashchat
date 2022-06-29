@@ -34,7 +34,6 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
     getCurrentUser();
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
