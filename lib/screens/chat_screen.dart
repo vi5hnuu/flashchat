@@ -82,7 +82,7 @@ class _ChatScreenState extends State<ChatScreen> {
                       onPressed: (){
                         //messagetext+loggedInUser
                         _fireStore.collection('messages').add(
-                          {'text':messageText,'sender':loggedInUser!.email}
+                          {'text':messageText,'sender':loggedInUser!.email,'timestamp':DateTime.now()}
                         );
                         messageTextControler.clear();
                       },
@@ -115,7 +115,6 @@ class MessageStream extends StatelessWidget {
             );
           }
             final messages=snapshot.data!.docs.reversed;
-          List<Text> messageWidget=[];
           for(var message in messages){
             final messageText=message.get('text');
             final messageSender=message.get('sender');
@@ -132,7 +131,7 @@ class MessageStream extends StatelessWidget {
           ),
         );
       },
-      stream: _fireStore.collection('messages').snapshots(),);
+      stream: _fireStore.collection('messages').orderBy('timestamp').snapshots(),);
   }
 }
 
@@ -172,6 +171,6 @@ class MessageBubble extends StatelessWidget {
         ),
       ],
       ),
-    );;
+    );
   }
 }
